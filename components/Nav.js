@@ -1,11 +1,14 @@
 import React from 'react';
 import Link from 'next/link'
 
-export default () => {
+export default (props) => {
+    const listItem = props.user ? <li style={{ color: 'white', paddingLeft: '0.5rem' }}>{props.user}'s submitted stories</li> : '';
     return (
         <>
             <div>
-                <img src='/static/logo.gif' />
+                <Link href='/'>
+                    <a><img src='/static/logo.gif' /></a>
+                </Link>
                 <div className='nav-container'>
                     <header>
                         <Link href='/'>
@@ -20,6 +23,7 @@ export default () => {
                             <li><Link href='/ask'><a>ask</a></Link></li>
                             <li><Link href='/show'><a>show</a></Link></li>
                             <li><Link href='/jobs'><a>jobs</a></Link></li>
+                            {listItem}
                         </ul>
                     </nav>
                 </div>
@@ -29,7 +33,6 @@ export default () => {
                 display: flex;
                 align-items: center;
                 background: #ff6600;
-                height: 3.5rem;
             }
             .nav-container {
                 display: flex;
@@ -47,16 +50,17 @@ export default () => {
             header {
                 font-weight: bold;
                 font-size: 1.6rem;
-                margin: 0;
+                margin: 0.4rem 0 0 0;
                 padding: 0;
                 line-height: 1;
             }
             ul {
                 list-style-type: none;
                 display: flex;
+                flex-wrap: wrap;
                 align-items: center;
-                margin: 0;
                 padding: 0;
+                margin: 0 0 0.4rem  0;
             }
             li {
                 font-weight: 500;
@@ -69,7 +73,6 @@ export default () => {
                 padding-left: 0;
             }
             li:last-child {
-                padding-right: 0;
                 border: none;
             }
             a {

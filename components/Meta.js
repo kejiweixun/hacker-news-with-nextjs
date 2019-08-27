@@ -17,6 +17,7 @@ export default (props) => {
         }
         body {
           margin: 0;
+          background: #F6F6F0;
         }
       `}</style>
    </>

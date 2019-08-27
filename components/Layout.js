@@ -7,9 +7,8 @@ export default (props) => {
     return (
         <>
             <Meta title={props.title} />
-            <Nav />
+            <Nav user={props.user}/>
             {props.children}
-            <Footer />
         </>
     )
 }
