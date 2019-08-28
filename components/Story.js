@@ -1,12 +1,12 @@
 import React from 'react';
 import Url from 'url-parse';
-import Link from 'next/link'
+import Link from 'next/link';
+import TimeAgo from './TimeAgo';
 
 export default (props) => {
     const { by, descendants, score, time, title, url, id} = props.story;
     const storyNum = props.index + 1;
-    const timeAgo = Math.floor((Date.now() / 1000 - time) / 3600);
-    const visiableUrl = url? new Url(url).hostname : '';
+    const visiableUrl = url? new Url(url).hostname.replace('www.', '') : '';
     const storyLink = url? `${new Url(url).protocol}//${new Url(url).hostname}`:'';
     return (
         <>
@@ -15,11 +15,11 @@ export default (props) => {
             </div>
             <div>
                 <p className='item-title-and-url'>
-                    <Link href={url}><a className='item-title'>{title}</a></Link>
-                    <Link href={storyLink}><a className='item-url'>{visiableUrl}</a></Link>
+                    <a className='item-title' href='url'>{title}</a>
+                    <a className='item-url' href={storyLink}>{visiableUrl}</a>
                 </p>
                 <div className='item-stat'>
-    <p className='item-point'>{score} points by <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${id}`}><a>{timeAgo} hours ago</a></Link> | <Link href={`/item?id=${id}`}><a>{descendants} comments</a></Link></p>
+    <p className='item-point'>{score} points by <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${id}`}><a><TimeAgo time={time}/></a></Link> | <Link href={`/item?id=${id}`}><a>{descendants} comments</a></Link></p>
                 </div>
             </div>
             <style jsx>{`
@@ -42,10 +42,12 @@ export default (props) => {
             .item-url {
             color: #828284;
             text-decoration: none;
+            font-size: 1.2rem;
             }
             .item-point {
             color: #828284;
             margin: 0;
+            font-size: 1.2rem;
             }
             .item-stat a {
                 color: #828284;

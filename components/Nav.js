@@ -64,6 +64,7 @@ export default (props) => {
             }
             li {
                 font-weight: 500;
+                font-size: 1.2rem;
                 padding: 0 0.5rem;
                 margin: 0;
                 line-height: 1;

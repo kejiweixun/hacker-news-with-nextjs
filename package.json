@@ -8,6 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@firebase/app": "^0.4.15",
+    "@firebase/database": "^0.5.1",
+    "firebase": "^6.4.2",
+    "html-entities": "^1.2.1",
     "isomorphic-unfetch": "^3.0.0",
     "next": "9.0.5",
     "react": "16.9.0",

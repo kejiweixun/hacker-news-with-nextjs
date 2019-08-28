@@ -16,7 +16,7 @@ const Index = (props) => {
         .items-container {
           margin: 1rem 0;
           display: grid;
-          grid-template-columns: 2rem minmax(auto, auto);
+          grid-template-columns: 3rem minmax(auto, auto);
         }
       `}</style>
     </>

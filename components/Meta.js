@@ -19,6 +19,20 @@ export default (props) => {
           margin: 0;
           background: #F6F6F0;
         }
+        //for unknow reason, use global jsx is the best way to style dangerouslySetInnerHtml
+        .comment-text p {
+          margin: 0;
+          margin-left: 1.2rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .comment-text a {
+          font-size: 1.3rem;
+          color: #222;
+        }
+        .comment-text a:visited {
+          color: #888;
+        }
       `}</style>
    </>
   )

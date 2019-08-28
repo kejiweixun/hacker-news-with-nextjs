@@ -24,11 +24,11 @@ function User(props) {
                     </tr>
                     <tr className='about'>
                         <td>about:</td>
-                        <td>{about}</td>
+                        <td dangerouslySetInnerHTML={{__html: about}} style={{verticalAlign:'text-top'}}/>
                     </tr>
                     <tr className='submitted'>
                         <td></td>
-                        <td><Link href='/submitted' as={`/submitted?id=${id}`}><a>submitted</a></Link></td>
+                        <td><Link href={`/submitted?id=${id}`}><a>submitted</a></Link></td>
                     </tr>
                 </table>
             </Layout>

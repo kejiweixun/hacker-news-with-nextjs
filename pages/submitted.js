@@ -5,7 +5,8 @@ import fetch from 'isomorphic-unfetch';
 import {useRouter} from 'next/router';
 
  function Submitted(props){
-    const stories = props.submittedStories.filter((story, index) => story.type !== 'comment' && !story.deleted);
+
+    const stories = props.submittedStories.filter(story => story.type !== 'comment' && !story.deleted);
 
     const storiesComponent = stories.map((story, index) => <Story story={story} index={index} />)
 
@@ -22,7 +23,7 @@ import {useRouter} from 'next/router';
         .items-container {
           margin: 1rem 0;
           display: grid;
-          grid-template-columns: 2rem minmax(auto, auto);
+          grid-template-columns: 3rem minmax(auto, auto);
         }
       `}</style>
     </>
@@ -37,7 +38,6 @@ Submitted.getInitialProps = async ({query}) => {
     return fetch(`https://hacker-news.firebaseio.com/v0/item/${submittedId}.json`).then(res => res.json())
   });
   const submittedStories = await Promise.all(promiseArray);
-  console.log(submittedStories[4])
   return {
     submittedStories: submittedStories
   }
