@@ -1,18 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import TimeAgo from './TimeAgo';
 
 function Comments({ reply, itemId}) {
   const [collapse, setCollapse] = useState('');
-// let count = 1;
-//   const repliesCount = function (reply) {
-//     if (reply.kids) {
-//       count += reply.kids.length ;
-//       reply.kids.forEach(kid => repliesCount(kid))
-//     }
-//   };
-//   repliesCount(reply)
+let count = 1;
+  const repliesCount = function (reply) {
+    if (reply.kids) {
+      count += reply.kids.length ;
+      reply.comment.forEach(comment => repliesCount(comment))
+    }
+  };
+  repliesCount(reply)
   
   return (
     <React.Fragment key={reply.id}>
@@ -22,7 +22,7 @@ function Comments({ reply, itemId}) {
             <Link href={`/user?id=${reply.by}`}><a>{reply.by}</a></Link>{' '}
             <Link href={`/item?id=${itemId}`}><a><TimeAgo time={reply.time} /></a></Link>{' '}
             <span onClick={() => setCollapse(collapse === 'none' ? '' : 'none')}>
-              [<span className='collapse-sign'>{collapse === 'none' ? `+` : '-'}</span>]
+              [<span className='collapse-sign'>{collapse === 'none' ? `+${count}` : '-'}</span>]
             </span>
           </div>
 
@@ -64,7 +64,7 @@ function Comments({ reply, itemId}) {
           }
           .collapse-sign {
             color: #828284;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             line-height: 1rem;
             cursor: pointer;
           }
