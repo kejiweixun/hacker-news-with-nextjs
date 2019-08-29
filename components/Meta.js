@@ -23,6 +23,8 @@ export default (props) => {
         .comment-text p {
           margin: 0;
           margin-left: 1.2rem;
+          margin-bottom: 0.8rem;
+          line-height: 1.3;
           overflow: hidden;
           text-overflow: ellipsis;
         }
@@ -32,6 +34,12 @@ export default (props) => {
         }
         .comment-text a:visited {
           color: #888;
+        }
+        //another dangerouslySetInnerHtml
+        .user-about td:last-child p {
+          margin: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       `}</style>
    </>

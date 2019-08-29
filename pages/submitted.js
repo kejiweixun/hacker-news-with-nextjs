@@ -1,47 +1,15 @@
 import React from 'react'
-import Layout from '../components/Layout';
-import Story from '../components/Story';
-import fetch from 'isomorphic-unfetch';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
+import Page from '../components/Page';
+import fetchStory from '../lib/fetchStory.js';
 
- function Submitted(props){
+function Submitted({stories}) {
+  const user = useRouter().query.id;
+  const storiesValid = stories.filter(story => story.type !== 'comment' && !story.deleted);
 
-    const stories = props.submittedStories.filter(story => story.type !== 'comment' && !story.deleted);
-
-    const storiesComponent = stories.map((story, index) => <Story story={story} index={index} />)
-
-    const router = useRouter();
-    const q = router.query;
-  return (
-    <>
-      <Layout title={`user submit storires`} user={q.id}>
-        <div className='items-container'>
-        {storiesComponent}
-        </div>
-      </Layout>
-      <style jsx>{`
-        .items-container {
-          margin: 1rem 0;
-          display: grid;
-          grid-template-columns: 3rem minmax(auto, auto);
-        }
-      `}</style>
-    </>
-  )
+  return  <Page stories={storiesValid} title='user submitted stories' user={user} />
 }
 
-Submitted.getInitialProps = async ({query}) => {
-    const res = await fetch(`https://hacker-news.firebaseio.com/v0/user/${query.id}.json`);
-    const userInfo = await res.json();
-  const submittedIds = userInfo.submitted.slice(0, 30);
-  const promiseArray = submittedIds.map(submittedId => {
-    return fetch(`https://hacker-news.firebaseio.com/v0/item/${submittedId}.json`).then(res => res.json())
-  });
-  const submittedStories = await Promise.all(promiseArray);
-  return {
-    submittedStories: submittedStories
-  }
-}
-
+Submitted.getInitialProps = fetchStory;
 
 export default Submitted;

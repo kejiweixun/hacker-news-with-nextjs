@@ -1,19 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
-import TimeAgo from './TimeAgo'
+import TimeAgo from './TimeAgo';
 
-function Comments({ reply, itemId }) {
+function Comments({ reply, itemId}) {
   const [collapse, setCollapse] = useState('');
+// let count = 1;
+//   const repliesCount = function (reply) {
+//     if (reply.kids) {
+//       count += reply.kids.length ;
+//       reply.kids.forEach(kid => repliesCount(kid))
+//     }
+//   };
+//   repliesCount(reply)
+  
   return (
     <React.Fragment key={reply.id}>
       {
         <div>
           <div className='comment-user'>
             <Link href={`/user?id=${reply.by}`}><a>{reply.by}</a></Link>{' '}
-            <Link href={`/item?id=${itemId}`}><a><TimeAgo time={reply.time}/></a></Link>{' '}
+            <Link href={`/item?id=${itemId}`}><a><TimeAgo time={reply.time} /></a></Link>{' '}
             <span onClick={() => setCollapse(collapse === 'none' ? '' : 'none')}>
-              [<span className='collapse-sign'>{collapse === 'none' ? '+' : '-'}</span>]
+              [<span className='collapse-sign'>{collapse === 'none' ? `+` : '-'}</span>]
             </span>
           </div>
 
@@ -23,9 +32,9 @@ function Comments({ reply, itemId }) {
             />
             <div style={{ marginLeft: '3rem' }}>
               {
-                reply.replies.length ?
-                //id=20818555 this item has a undefined replies, have no idea
-                  (reply.replies.filter(item => item && !item.deleted)).map(item => Comments({ reply: item, itemId }))
+                reply.comment.length ?
+                  //id=20818555 this item has a undefined replies, have no idea
+                  (reply.comment.filter(item => item && !item.deleted)).map(item => Comments({ reply: item, itemId }))
                   : ''
               }
             </div>

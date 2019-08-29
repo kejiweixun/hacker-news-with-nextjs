@@ -1,6 +1,7 @@
-import React, {useState}from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import Comments from '../components/Comments';
+import TimeAgo from '../components/TimeAgo';
 import Url from 'url-parse';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,9 +10,8 @@ import 'firebase/database';
 
 function Item(props) {
     const [textareaPlaceholder, setTextareaPlaceholder] = useState('')
-    const { by, descendants, kids, score, time, title, url:storyUrl, replies} = props.story;
-    const repliesNotDeleted = replies.filter(item => !item.deleted)
-    const timeAgo = Math.floor((+ new Date() / 1000 - time) / 3600);
+    const { by, descendants, score, time, title, url: storyUrl, comment } = props.story;
+    const commentNotDeleted = comment.filter(item => !item.deleted)
     const visiableUrl = storyUrl ? new Url(storyUrl).hostname : '';
     const storyLink = storyUrl ? `${new Url(storyUrl).protocol}//${new Url(storyUrl).hostname}` : '';
     const router = useRouter();
@@ -24,20 +24,20 @@ function Item(props) {
                     <a className='item-url' href={storyLink}>({visiableUrl})</a>
                 </p>
                 <div className='item-stat'>
-                    <p className='item-point'>{score} points by <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${id}`}><a>{timeAgo} hours ago</a></Link> | <Link href={`/item?id=${id}`}><a>{descendants} comments</a></Link></p>
+                    <p className='item-point'>{score} points by <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${id}`}><a><TimeAgo time={time} /></a></Link> | <Link href={`/item?id=${id}`}><a>{descendants} comments</a></Link></p>
                 </div>
                 <div className='comment-form'>
                     <form>
                         <textarea
-                        placeholder={textareaPlaceholder}/>
-                        <button type='button' onClick={()=>setTextareaPlaceholder("hacker news don't offer post api as far as I know")}>add comment</button>
+                            placeholder={textareaPlaceholder} />
+                        <button type='button' onClick={() => setTextareaPlaceholder("hacker news don't offer post api as far as I know")}>add comment</button>
                     </form>
                 </div>
                 <div className='all-comment'>
                     {
-                        repliesNotDeleted.map(reply =>  <Comments reply={reply} itemId={id} key={reply.id}/>)
+                        commentNotDeleted.map(reply =>   <Comments reply={reply} itemId={id} key={reply.id} /> )
                     }
-                   
+
                 </div>
             </div>
             <style jsx>{`
@@ -83,13 +83,13 @@ function Item(props) {
                 width: 98%;
                 max-width: 50rem;
                 height: 10rem;
-                line-height: 5rem;
                 margin-bottom: 1.5rem;
             }
             .comment-form button {
-                border: 1px solid #999;
-                background: transparent;
+                background: white;
                 border-radius: 0.5rem;
+                border: none;
+                box-shadow: 0px 0px 1px;
             }
             .all-comment {
                 margin: 0;
@@ -100,33 +100,55 @@ function Item(props) {
     )
 }
 
-Item.getInitialProps = async ({ query}) => {
+Item.getInitialProps = async ({ query }) => {
     if (!firebase.apps.length) {
         firebase.initializeApp({
             databaseURL: 'https://hacker-news.firebaseio.com',
         });
-    }
-    const db = firebase.database().ref('v0');
-    function getItem(id) {
-        return db
-            .child(`item/${id}`)
+    };
+
+    function getComment(storyId) {
+        return firebase.database().ref('v0')
+            .child(`item/${storyId}`)
             .once('value')
-            .then(snapshot => {
-                const val = snapshot.val();
-                return Promise.all((val.kids || []).map(getItem))
-                    .then(kidsVals => {
-                        val.replies = kidsVals? kidsVals:'';
-                        console.log(val)
-                        return val;
-                    })
-                    //
-                    .catch(e => console.log(e))
+            .then(snap => {
+                let item = snap.val();
+                if (!item) {
+                    item = {deleted: true} // sometimes item will be returned null, e.g. id=20824713
+                }
+                if (item.kids) {
+                    return Promise.all(item.kids.map(kid => getComment(kid)))
+                        .then(res => {
+                            item.comment = res;
+                            return item;
+                        })
+                } else {
+                    item.comment = [];
+                    return item;
+                }
             });
-    }
-    const story = await getItem(query.id)
-    return {
-        story: story
-    }
+    };
+
+
+    //https://stackoverflow.com/questions/41905839/fire-promise-all-once-all-nested-promises-have-resolved
+    // function getItem(id) {
+    //     return firebase.database().ref('v0')
+    //         .child(`item/${id}`)
+    //         .once('value')
+    //         .then(snap => { 
+    //             const item = snap.val();
+    //             return Promise.all((item.kids || []).map(getItem))
+    //                 .then(kidsItems => {
+    //                     item.replies = kidsItems;
+    //                     return item;
+    //                 })
+    //         });
+    // };
+
+    const story = await getComment(query.id);
+
+    return { story };
 }
 
 export default Item;
+

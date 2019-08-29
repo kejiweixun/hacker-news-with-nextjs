@@ -17,7 +17,7 @@ export default (props) => {
                     </header>
                     <nav>
                         <ul>
-                            <li><Link href='/new'><a>new</a></Link></li>
+                            <li><Link href='/newest'><a>new</a></Link></li>
                             <li><Link href='/past'><a>past</a></Link></li>
                             <li><Link href='/comments'><a>comments</a></Link></li>
                             <li><Link href='/ask'><a>ask</a></Link></li>

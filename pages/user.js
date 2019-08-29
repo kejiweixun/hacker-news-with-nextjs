@@ -1,11 +1,12 @@
 import React from 'react';
-import fetch from 'isomorphic-unfetch';
 import Layout from '../components/Layout';
-import Link from 'next/link'
+import Link from 'next/link';
+import * as firebase from 'firebase/app';
+import 'firebase/database';
 
 function User(props) {
-    const { id, created, karma, about, submitted } = props.userInfo;
-    const createdTime = (new Date(created * 1000)).toLocaleDateString();
+    const { id, created, karma, about } = props.userInfo;
+    const createdDate = new Date(created * 1000).toLocaleDateString().replace('-','年').replace('-','月').replace('/','年').replace('/','月').replace(/(.+)/, '$1日');
     return (
         <>
             <Layout title={`user: ${id}`}>
@@ -14,21 +15,21 @@ function User(props) {
                         <td>user:</td>
                         <td>{id}</td>
                     </tr>
-                    <tr className='created'>
+                    <tr className='user-created'>
                         <td>created:</td>
-                        <td>{createdTime}</td>
+                        <td>{createdDate}</td>
                     </tr>
-                    <tr className='karma'>
+                    <tr className='user-karma'>
                         <td>karma:</td>
                         <td>{karma}</td>
                     </tr>
-                    <tr className='about'>
+                    <tr className='user-about'>
                         <td>about:</td>
-                        <td dangerouslySetInnerHTML={{__html: about}} style={{verticalAlign:'text-top'}}/>
+                        <td dangerouslySetInnerHTML={{ __html: about }} style={{ verticalAlign: 'text-top' }} />
                     </tr>
-                    <tr className='submitted'>
+                    <tr className='user-submitted'>
                         <td></td>
-                        <td><Link href={`/submitted?id=${id}`}><a>submitted</a></Link></td>
+                        <td><Link href={`/submitted?id=${id}`}><a>submitted stories</a></Link></td>
                     </tr>
                 </table>
             </Layout>
@@ -38,16 +39,19 @@ function User(props) {
                 font-size: 1.4rem;
                 color: #828284;
             }
-            .created td:last-child{
+            .user-created td:last-child{
                 color: black;
             }
             tr td:last-child {
                 padding-left: 1rem;
             }
-            .submitted a {
+            .user-submitted {
+                height: 10rem;
+            }
+            .user-submitted a {
                 color: black;
             }
-            .submitted a:visited {
+            .user-submitted a:visited {
                 color: #828284;
             }
         `}</style>
@@ -56,14 +60,16 @@ function User(props) {
 }
 
 User.getInitialProps = async ({ query }) => {
-    const res = await fetch(`https://hacker-news.firebaseio.com/v0/user/${query.id}.json`);
-    const userInfo = await res.json();
-    return ({
-        userInfo: userInfo
-    })
+    const firebaseConfig = {
+        databaseURL: 'https://hacker-news.firebaseio.com',
+    }
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig)
+    }
+    const userInfo = await firebase.database().ref('v0').child(`user/${query.id}`).once('value').then(snap => snap.val());
+
+    return { userInfo }
 }
-
-
 
 export default User;
 
