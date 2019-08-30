@@ -9,6 +9,7 @@ export default (props) => {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta charSet="utf-8" />
       <link rel='shortcut icon' href='/static/favicon.ico' type='image/x-ico'/>
+      <link rel='stylesheet' href='/static/nprogress.css' />
     </Head>
     <style jsx global>{`
         html {
@@ -37,21 +38,36 @@ export default (props) => {
         .comment-text a:visited {
           color: #888;
         }
-        @media(min-width: 750px){
-          .comment-text p {
-            font-size: 1.3rem;
-          }
-        }
         //another dangerouslySetInnerHtml
         .user-about td:last-child p {
           margin: 0;
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        .comment-title-text p {
+          margin: 0;
+          margin-bottom: 0.8rem;
+          line-height: 1.3;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 1.4rem;
+        }
+        .comment-title-text a {
+          font-size: 1.3rem;
+          color: #222;
+        }
+        .comment-title-text a:visited {
+          color: #888;
+        }
         @media(min-width: 750px){
           body {
             width: 84%;
             margin: 1rem auto;
+          }
+        }
+        @media(min-width: 750px){
+          .comment-text p {
+            font-size: 1.3rem;
           }
         }
       `}</style>

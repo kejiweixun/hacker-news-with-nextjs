@@ -1,8 +1,13 @@
 import React from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
+import {useRouter} from 'next/router';
 
 export default (props) => {
-    const listItem = props.user ? <li style={{ color: 'white', paddingLeft: '1rem', fontSize: '1.4rem' }}>{props.user}</li> : '';
+    const userName = props.user ? <li style={{ color: 'white', paddingLeft: '1rem', fontSize: '1.4rem' }}>{props.user}</li> : '';
+
+    const router = useRouter();
+    const path = router.pathname;
+
     return (
         <>
             <div className='nav-container-logo-text'>
@@ -18,13 +23,27 @@ export default (props) => {
                     </header>
                     <nav>
                         <ul>
-                            <li><Link href='/newest'><a>new</a></Link></li>
-                            <li><Link href='/past'><a>past</a></Link></li>
-                            <li><Link href='/comments'><a>comments</a></Link></li>
-                            <li><Link href='/ask'><a>ask</a></Link></li>
-                            <li><Link href='/show'><a>show</a></Link></li>
-                            <li><Link href='/jobs'><a>jobs</a></Link></li>
-                            {listItem}
+                            <li>
+                                <Link href='/newest'>
+                                    <a style={{color: `${path==='/newest'?'white':''}`}}>new</a>
+                                </Link>
+                                </li>
+                            <li>
+                                <Link href='/ask'>
+                                    <a style={{color: `${path==='/ask'?'white':''}`}}>ask</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/show'>
+                                    <a style={{color: `${path==='/show'?'white':''}`}}>show</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/jobs'>
+                                    <a style={{color: `${path==='/jobs'?'white':''}`}}>jobs</a>
+                                </Link>
+                            </li>
+                            {userName}
                         </ul>
                     </nav>
                 </div>
@@ -46,8 +65,8 @@ export default (props) => {
                 align-items: flex-start;
             }
             img {
-                width: 1.6rem;
-                height: 1.6rem;
+                width: 1.8rem;
+                height: 1.8rem;
                 display: block;
                 border: 1px solid white;
             }
@@ -57,6 +76,10 @@ export default (props) => {
                 margin: 0.4rem 0 0 0;
                 padding: 0;
                 line-height: 1.2;
+                margin-left: 1rem;
+            }
+            nav {
+                margin-left: 1rem;
             }
             ul {
                 list-style-type: none;
@@ -69,9 +92,10 @@ export default (props) => {
             li {
                 font-weight: 400;
                 font-size: 1.2rem;
-                padding: 0 0.5rem;
+                font-weight: 500;
+                padding: 0 0.6rem;
                 margin: 0;
-                line-height: 1.2;
+                line-height: 1;
                 border-right: 1px solid black;
             }
             li:first-child {

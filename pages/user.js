@@ -11,6 +11,7 @@ function User(props) {
         <>
             <Layout title={`user: ${id}`}>
                 <table>
+                    <tbody>
                     <tr className='user'>
                         <td>user:</td>
                         <td>{id}</td>
@@ -31,6 +32,7 @@ function User(props) {
                         <td></td>
                         <td><Link href={`/submitted?id=${id}`}><a>submitted stories</a></Link></td>
                     </tr>
+                    </tbody>
                 </table>
             </Layout>
 
