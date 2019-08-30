@@ -8,6 +8,7 @@ export default (props) => {
       <title>{props.title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta charSet="utf-8" />
+      <link rel='shortcut icon' href='/static/favicon.ico' type='image/x-ico'/>
     </Head>
     <style jsx global>{`
         html {
@@ -18,6 +19,7 @@ export default (props) => {
         body {
           margin: 0;
           background: #F6F6F0;
+          box-sizing: border-box;
         }
         //for unknow reason, use global jsx is the best way to style dangerouslySetInnerHtml
         .comment-text p {
@@ -35,11 +37,22 @@ export default (props) => {
         .comment-text a:visited {
           color: #888;
         }
+        @media(min-width: 750px){
+          .comment-text p {
+            font-size: 1.3rem;
+          }
+        }
         //another dangerouslySetInnerHtml
         .user-about td:last-child p {
           margin: 0;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+        @media(min-width: 750px){
+          body {
+            width: 84%;
+            margin: 1rem auto;
+          }
         }
       `}</style>
    </>

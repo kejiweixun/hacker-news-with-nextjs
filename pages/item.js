@@ -12,10 +12,12 @@ function Item(props) {
     const [textareaPlaceholder, setTextareaPlaceholder] = useState('')
     const { by, descendants, score, time, title, url: storyUrl, comment } = props.story;
     const commentNotDeleted = comment.filter(item => !item.deleted)
-    const visiableUrl = storyUrl ? new Url(storyUrl).hostname : '';
+    const visiableUrl = storyUrl ? (new Url(storyUrl).hostname).replace('www.', '') : '';
     const storyLink = storyUrl ? `${new Url(storyUrl).protocol}//${new Url(storyUrl).hostname}` : '';
     const router = useRouter();
     const id = router.query.id;
+    const pastURL = encodeURI(`https://hn.algolia.com/?query=${title}&sort=byDate&dateRange=all&type=story&storyText=false&prefix&page=0`);
+    const webURL = encodeURI(`https://www.google.com/search?q=${title}`);
     return (
         <Layout title={title}>
             <div>
@@ -24,7 +26,7 @@ function Item(props) {
                     <a className='item-url' href={storyLink}>({visiableUrl})</a>
                 </p>
                 <div className='item-stat'>
-                    <p className='item-point'>{score} points by <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${id}`}><a><TimeAgo time={time} /></a></Link> | <Link href={`/item?id=${id}`}><a>{descendants} comments</a></Link></p>
+                    <p className='item-point'>{score} points by <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${id}`}><a><TimeAgo time={time} /></a></Link> | <a href={pastURL}>past</a> | <a href={webURL}>web</a> | <Link href={`/item?id=${id}`}><a>{descendants} comments</a></Link></p>
                 </div>
                 <div className='comment-form'>
                     <form>
@@ -47,11 +49,13 @@ function Item(props) {
             .item-title-and-url {
             margin-bottom: 0.3rem;
             }
-            .item-title{
+            .item-title {
             font-size: 1.6rem;
             padding-right: 0.5rem;
             text-decoration: none;
             color: black;
+            background: url(../static/arrow.gif) no-repeat 0 center;
+            padding-left: 1.2rem;
             }
             .item-url {
             color: #828284;
@@ -62,6 +66,7 @@ function Item(props) {
             color: #828284;
             margin: 0;
             font-size: 1.2rem;
+            padding-left: 1.2rem;
             }
             .item-stat a {
                 color: #828284;
@@ -82,7 +87,7 @@ function Item(props) {
                 border: 1px solid #999;
                 width: 98%;
                 max-width: 50rem;
-                height: 10rem;
+                height: 8rem;
                 margin-bottom: 1.5rem;
             }
             .comment-form button {
@@ -90,10 +95,19 @@ function Item(props) {
                 border-radius: 0.5rem;
                 border: none;
                 box-shadow: 0px 0px 1px;
+                margin-bottom: 6rem;
             }
             .all-comment {
                 margin: 0;
                 padding-bottom: 5rem;
+            }
+            @media(min-width: 750px){
+                .item-title {
+                    font-size: 1.5rem;
+                }
+                .item-point {
+                    font-size: 1.1rem;
+                }
             }
             `}</style>
         </Layout>

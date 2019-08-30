@@ -59,6 +59,17 @@ export default (props) => {
             .item-stat {
                 margin: 0 0 0.4rem 0;
             }
+            @media(min-width: 750px){
+                .item-num {
+                    font-size: 1.2rem;
+                }
+                .item-title {
+                    font-size: 1.5rem;
+                }
+                .item-url {
+                    font-size: 1.1rem;
+                }
+            }
 
             `}</style>
         </>
