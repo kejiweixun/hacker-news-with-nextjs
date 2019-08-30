@@ -21,9 +21,9 @@ let count = 1;
           <div className='comment-user'>
             <Link href={`/user?id=${reply.by}`}><a>{reply.by}</a></Link>{' '}
             <Link href={`/item?id=${itemId}`}><a><TimeAgo time={reply.time} /></a></Link>{' '}
-            <span onClick={() => setCollapse(collapse === 'none' ? '' : 'none')}>
+            <a onClick={() => setCollapse(collapse === 'none' ? '' : 'none')} href='javascript:void(0)'>
               [<span className='collapse-sign'>{collapse === 'none' ? `+${count}` : '-'}</span>]
-            </span>
+            </a>
           </div>
 
           <div style={{ display: `${collapse}` }}>
