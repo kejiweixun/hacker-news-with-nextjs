@@ -27,6 +27,9 @@ export default ({ story, index }) => {
         Number(pageQuery) + 1 :
         2;
     const storyNumOffset = storyNum + 30 * (pageNum - 2);
+    // some item has no descendats property
+    // e.g. id = 20846442;
+    const commentCount = descendants ? descendants : 0;
     return (
         <>
             <div>
@@ -71,7 +74,7 @@ export default ({ story, index }) => {
                             </span>
                             <Link href={`/item?id=${id}`}>
                                 <a>
-                                    {`${descendants} comments`}
+                                    {`${commentCount} comments`}
                                 </a>
                             </Link>
                         </p>

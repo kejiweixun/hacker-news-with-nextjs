@@ -38,7 +38,7 @@ function StoryList({ stories, title, user }) {
       </Layout>
       <style jsx>{`
         .items-container {
-          margin: 1rem 0;
+          margin: 1rem 1rem 1rem 0;
           display: grid;
           grid-template-columns: minmax(2rem, 4rem) minmax(auto, auto);
         }

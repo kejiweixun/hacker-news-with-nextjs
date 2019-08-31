@@ -37,6 +37,7 @@ function StoryItem({ item }) {
             <a className='item-title' href={url}>
               {title}
             </a>
+            <span>{' '}|{' '}</span>
             <a className='item-url' href={storyHomepage}>
               {visiableUrl}
             </a>
@@ -105,7 +106,6 @@ function StoryItem({ item }) {
             grid-template-columns: 1.5rem 1fr;
           }
           .item-title-arrow {
-
             margin: 0;
             background: url(../static/arrow.gif) no-repeat 0 center;
           }
@@ -117,7 +117,6 @@ function StoryItem({ item }) {
           font-size: 1.6rem;
           text-decoration: none;
           color: black;
-          margin-right: 0.5rem;
           }
           .item-url {
           color: #828284;

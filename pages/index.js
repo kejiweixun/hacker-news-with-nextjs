@@ -4,7 +4,7 @@ import getStoryList from '../lib/getStoryList.js';
 
 const Index = ({ stories }) => <StoryList
   stories={stories}
-  title='KeKe News'
+  title='Hacker News'
 />
 
 Index.getInitialProps = getStoryList;
