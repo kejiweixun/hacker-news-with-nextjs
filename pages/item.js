@@ -3,11 +3,11 @@ import CommentItem from '../components/CommentItem';
 import StoryItem from '../components/StoryItem';
 import getItem from '../lib/getItem.js'
 
-function Item(props) {
-    if (props.item.type === 'comment') {
-        return <CommentItem item={props.item} />
+function Item({ item }) {
+    if (item.type === 'comment') {
+        return <CommentItem item={item} />
     } else {
-        return <StoryItem item={props.item} />
+        return <StoryItem item={item} />
     }
 }
 

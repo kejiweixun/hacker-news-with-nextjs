@@ -1,13 +1,12 @@
 import React from 'react';
-import Page from '../components/Page';
-import fetchStory from '../lib/fetchStory.js'
+import StoryList from '../components/StoryList';
+import getStoryList from '../lib/getStoryList.js'
 
-function Newest({stories}) {
-  return (
-    <Page stories={stories} title='Newest | Hacker News'/>
-  )
-}
-
-Newest.getInitialProps = fetchStory;
+const Newest = ({stories}) => <StoryList
+stories={stories}
+title='Newest | KeKe News'
+/>
+ 
+Newest.getInitialProps = getStoryList;
 
 export default Newest;

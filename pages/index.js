@@ -1,14 +1,12 @@
-import React from 'react'
-import fetchStory from '../lib/fetchStory.js';
-import Page from '../components/Page';
+import React from 'react';
+import StoryList from '../components/StoryList';
+import getStoryList from '../lib/getStoryList.js';
 
+const Index = ({ stories }) => <StoryList
+  stories={stories}
+  title='KeKe News'
+/>
 
-const Index = ({ stories }) => {
-  return (
-      <Page stories={stories} title='Hacker News' />
-  )
-}
-
-Index.getInitialProps = fetchStory;
+Index.getInitialProps = getStoryList;
 
 export default Index;

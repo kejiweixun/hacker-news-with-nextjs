@@ -1,9 +1,12 @@
 import React from 'react';
-import Page from '../components/Page';
-import fetchStory from '../lib/fetchStory.js'
+import StoryList from '../components/StoryList';
+import getStoryList from '../lib/getStoryList.js'
 
-const Job = ({stories}) => <Page stories={stories} title='Jobs | Hacker News'/>
+const Job = ({ stories }) => <StoryList
+  stories={stories}
+  title='Jobs | KeKe News'
+/>
 
-Job.getInitialProps = fetchStory;
+Job.getInitialProps = getStoryList;
 
 export default Job;

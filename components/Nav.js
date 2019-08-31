@@ -1,18 +1,35 @@
 import React from 'react';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 export default (props) => {
-    const userName = props.user ? <li style={{ color: 'white', paddingLeft: '1rem', fontSize: '1.4rem' }}>{props.user}</li> : '';
-
     const router = useRouter();
     const path = router.pathname;
+    const userStyle = {
+        color: 'white',
+        paddingLeft: '1rem',
+        fontSize: '1.4rem'
+    };
+    const newStyle = {
+        color: `${path === '/newest' ? 'white' : ''}`
+    }
+    const askStyle = {
+        color: `${path === '/ask' ? 'white' : ''}`
+    }
+    const showStyle = {
+        color: `${path === '/show' ? 'white' : ''}`
+    }
+    const jobsStyle = {
+        color: `${path === '/jobs' ? 'white' : ''}`
+    }
 
     return (
         <>
             <div className='nav-container-logo-text'>
                 <Link href='/'>
-                    <a className='nav-logo'><img src='/static/logo.gif' /></a>
+                    <a className='nav-logo'>
+                        <img src='/static/logo.gif' />
+                    </a>
                 </Link>
 
                 <div className='nav-container-text'>
@@ -25,31 +42,44 @@ export default (props) => {
                         <ul>
                             <li>
                                 <Link href='/newest'>
-                                    <a style={{color: `${path==='/newest'?'white':''}`}}>new</a>
+                                    <a style={newStyle}>
+                                        new
+                                    </a>
                                 </Link>
-                                </li>
+                            </li>
                             <li>
                                 <Link href='/ask'>
-                                    <a style={{color: `${path==='/ask'?'white':''}`}}>ask</a>
+                                    <a style={askStyle}>
+                                        ask
+                                    </a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href='/show'>
-                                    <a style={{color: `${path==='/show'?'white':''}`}}>show</a>
+                                    <a style={showStyle}>
+                                        show
+                                    </a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href='/jobs'>
-                                    <a style={{color: `${path==='/jobs'?'white':''}`}}>jobs</a>
+                                    <a style={jobsStyle}>
+                                        jobs
+                                    </a>
                                 </Link>
                             </li>
-                            {userName}
+                            {
+                                props.user ?
+                                    <li style={userStyle}>
+                                        {props.user}
+                                    </li> :
+                                    ''
+                            }
                         </ul>
                     </nav>
                 </div>
             </div>
             <style jsx>{`
-            
 
             .nav-container-logo-text {
                 display: flex;
@@ -92,7 +122,6 @@ export default (props) => {
             li {
                 font-weight: 400;
                 font-size: 1.2rem;
-                font-weight: 500;
                 padding: 0 0.6rem;
                 margin: 0;
                 line-height: 1;

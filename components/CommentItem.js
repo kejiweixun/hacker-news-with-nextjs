@@ -4,31 +4,76 @@ import TimeAgo from '../components/TimeAgo';
 import Layout from '../components/Layout';
 import CommentsList from '../components/ComentList';
 
-function CommentItem(props) {
+function CommentItem({ item }) {
   const [textareaPlaceholder, setTextareaPlaceholder] = useState('');
-  const { by, time, text, parent, comment } = props.item;
-  const commentNotDeleted = comment.filter(item => !item.deleted);
+  const { by,
+    time,
+    text,
+    parent,
+    belongToStory,
+    storyId,
+    comment } = item;
+  const commentNotDeleted = comment.filter(
+    item => !item.deleted
+  );
+
   return (
-    <Layout title={`${text.slice(0, 30)}... | Hacker News`}>
+    <Layout title={`${text.slice(0, 20)}... | Hacker News`}>
+
       <div>
         <div className='item-stat'>
           <p className='item-point'>
-            <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${parent}`}><a><TimeAgo time={time} /></a></Link> | <Link href={`item?id=${parent}`}><a>parent</a></Link> | </p>
+            <Link href={`/user?id=${by}`}>
+              <a>
+                {`${by} `}
+              </a>
+            </Link>
+            <Link href={`/item?id=${parent}`}>
+              <a>
+                <TimeAgo time={time} />
+              </a>
+            </Link>
+            <span>
+              {' '}|{' '}
+            </span>
+            <Link href={`item?id=${parent}`}>
+              <a>
+                parent
+              </a>
+            </Link>
+            <span>
+              {' '}|{' '}
+            </span>
+            <Link href={`item?id=${storyId}`}>
+              <a>
+                {`on: ${belongToStory.slice(0, 40)}...`}
+              </a>
+            </Link>
+          </p>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: `<p>${text}` }} className='comment-title-text' />
+        <div dangerouslySetInnerHTML={{ __html: `<p>${text}` }}
+          className='comment-title-text'
+          style={{margin: '1rem'}}
+        />
         <div className='comment-form'>
           <form>
             <textarea
               placeholder={textareaPlaceholder} />
-            <button type='button' onClick={() => setTextareaPlaceholder("hacker news don't offer post api as far as I know")}>add comment</button>
+            <button type='button' onClick={() =>
+              setTextareaPlaceholder("can't post")}>
+              add comment
+            </button>
           </form>
         </div>
 
-        <div className='all-comment'>
+        <div className='all-replies'>
           {
-            commentNotDeleted.map(comment => <CommentsList comment={comment} key={comment.id} />)
+            commentNotDeleted.map(comment =>
+              <CommentsList
+                comment={comment}
+                key={comment.id}
+              />)
           }
-
         </div>
       </div>
       <style jsx>{`
@@ -44,7 +89,6 @@ function CommentItem(props) {
               .item-stat {
                   margin: 0 0 0.4rem 0;
                   background: url(../static/arrow.gif) no-repeat 0 center;
-                  padding-left: 1.2rem;
               }
               .item-stat a {
                   color: #828284;
@@ -53,13 +97,9 @@ function CommentItem(props) {
               .item-stat a:hover {
                   text-decoration: underline;
               }
-              .item-title-comment {
-                  padding-left: 1.2rem;
-                  font-size: 1.4rem;
-              }
               .comment-form {
                   margin: 2rem 0;
-                  padding-left: 2rem;
+                  padding-left: 1rem;
               }
               .comment-form textarea{
                   display: block;
@@ -76,7 +116,7 @@ function CommentItem(props) {
                   box-shadow: 0px 0px 1px;
                   margin-bottom: 6rem;
               }
-              .all-comment {
+              .all-replies {
                   margin: 0;
                   padding-bottom: 5rem;
               }
@@ -89,6 +129,5 @@ function CommentItem(props) {
     </Layout>
   )
 }
-
 
 export default CommentItem;

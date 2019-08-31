@@ -1,30 +1,38 @@
 import React from 'react';
-import Layout from '../components/Layout';
-import Story from '../components/Story';
+import Layout from './Layout';
+import Story from './Story';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-
-function Page({ stories, title, user }) {
+function StoryList({ stories, title, user }) {
   const path = useRouter().pathname;
   const pageQuery = useRouter().query.p;
-  const pageNum = pageQuery ? Number(pageQuery) + 1 : 2;
-  const storiesValidate = stories.filter(story => !story.deleted);
+  const pageNum = pageQuery ?
+    Number(pageQuery) + 1 :
+    2;
+  const storiesNotDeleted = stories.filter(story => !story.deleted);
+
   return (
     <>
       <Layout title={title} user={user}>
         <div className='items-container'>
           {
-            storiesValidate.map((story, index) => {
-              return <Story story={story} index={index} key={story.id} />
-            })
+            storiesNotDeleted.map((story, index) => <Story
+              story={story}
+              index={index}
+              key={story.id}
+            />)
           }
-          { stories.length ? 
-            <div className='more'>
-              <Link href={`${path}?p=${pageNum}`}>
-                <a>More</a>
-              </Link>
-            </div> : ''
+          {
+            stories.length ?
+              <div className='more'>
+                <Link href={`${path}?p=${pageNum}`}>
+                  <a>
+                    More
+                  </a>
+                </Link>
+              </div> :
+              ''
           }
         </div>
       </Layout>
@@ -50,4 +58,4 @@ function Page({ stories, title, user }) {
   )
 }
 
-export default Page;
+export default StoryList;

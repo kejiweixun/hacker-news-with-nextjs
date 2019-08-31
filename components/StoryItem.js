@@ -1,21 +1,32 @@
 import React, { useState } from 'react';
-import Url from 'url-parse';
+import URL from 'url-parse';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import TimeAgo from '../components/TimeAgo';
 import Layout from '../components/Layout';
 import CommentsList from '../components/ComentList';
 
-function StoryItem(props) {
+function StoryItem({ item }) {
   const [textareaPlaceholder, setTextareaPlaceholder] = useState('');
-  const { by, descendants, score, time, title, url: storyUrl, comment } = props.item;
-  const text = props.item.text? props.item.text : '';
-  const commentNotDeleted = comment.filter(item => !item.deleted)
-  const visiableUrl = storyUrl ? (new Url(storyUrl).hostname).replace('www.', '') : '';
-  const storyHomepage = storyUrl ? `${new Url(storyUrl).protocol}//${new Url(storyUrl).hostname}` : '';
+  const { by,
+    descendants,
+    score,
+    time,
+    title,
+    url,
+    comment } = item;
+  const text = item.text ? item.text : '';
+  const commentNotDeleted = comment.filter(item => !item.deleted);
+  const { hostname, protocol } = new URL(url);
+  const visiableUrl = url ?
+    `(${hostname.replace('www.', '')})`:
+    '';
+  const storyHomepage = url ?
+    `${protocol}//${hostname}` :
+    '';
   const id = useRouter().query.id;
-  const pastURL = encodeURI(`https://hn.algolia.com/?query=${title}&sort=byDate&dateRange=all&type=story&storyText=false&prefix&page=0`);
-  const webURL = encodeURI(`https://www.google.com/search?q=${title}`);
+  const pastSearch = encodeURI(`https://hn.algolia.com/?query=${title}&sort=byDate&dateRange=all&type=story&storyText=false&prefix&page=0`);
+  const webSearch = encodeURI(`https://www.google.com/search?q=${title}`);
 
   return (
     <Layout title={title}>
@@ -23,28 +34,64 @@ function StoryItem(props) {
         <div className='item-title-and-url'>
           <div className='item-title-arrow' />
           <p>
-            <a className='item-title' href={storyUrl}>{title}</a>
-            <a className='item-url' href={storyHomepage}>({visiableUrl})</a>
+            <a className='item-title' href={url}>
+              {title}
+            </a>
+            <a className='item-url' href={storyHomepage}>
+              {visiableUrl}
+            </a>
           </p>
         </div>
         <div className='item-stat'>
           <p className='item-point'>
-            {score} points by <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${id}`}><a><TimeAgo time={time} /></a></Link> | <a href={pastURL}>past</a> | <a href={webURL}>web</a> | <Link href={`/item?id=${id}`}><a>{descendants} comments</a></Link>
+            <span>{score} points by{' '}</span>
+            <Link href={`/user?id=${by}`}>
+              <a>{by}</a>
+            </Link>
+            <Link href={`/item?id=${id}`}>
+              <a>
+                {' '}
+                <TimeAgo time={time} />
+              </a>
+            </Link>
+            <span>{' '}|{' '}</span>
+            <a href={pastSearch}>
+              past
+            </a>
+            <span>{' '}|{' '}</span>
+            <a href={webSearch}>
+              web
+            </a>
+            <span>{' '}|{' '}</span>
+            <Link href={`/item?id=${id}`}>
+              <a>
+                {descendants} comments
+              </a>
+            </Link>
           </p>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: `<p>${text}` }} className='comment-title-text' />
+        <div className='comment-title-text'
+          dangerouslySetInnerHTML={{ __html: `<p>${text}` }}
+          style={{margin: '1rem'}}
+        />
         <div className='comment-form'>
           <form>
             <textarea
-              placeholder={textareaPlaceholder} />
-            <button type='button' onClick={() => setTextareaPlaceholder("hacker news don't offer post api as far as I know")}>add comment</button>
+              placeholder={textareaPlaceholder}
+            />
+            <button onClick={() => setTextareaPlaceholder("HN post api?")}>
+              add comment
+            </button>
           </form>
         </div>
         <div className='all-comment'>
           {
-            commentNotDeleted.map(comment => <CommentsList comment={comment} key={comment.id} />)
+            commentNotDeleted.map(comment =>
+              <CommentsList
+                comment={comment}
+                key={comment.id}
+              />)
           }
-
         </div>
       </div>
       <style jsx>{`
@@ -52,15 +99,13 @@ function StoryItem(props) {
               margin: 1rem 2rem;
           }
           .item-title-and-url {
-            padding: 0;
             margin: 0;
             margin-bottom: 0.3rem;
             display: grid;
             grid-template-columns: 1.5rem 1fr;
           }
           .item-title-arrow {
-            width: 1.5rem;
-            height: 1.5rem;
+
             margin: 0;
             background: url(../static/arrow.gif) no-repeat 0 center;
           }
@@ -97,7 +142,7 @@ function StoryItem(props) {
           }
           .comment-form {
               margin: 2rem 0;
-              padding: 0;
+              padding-left: 1rem;
           }
           .comment-form textarea{
               display: block;

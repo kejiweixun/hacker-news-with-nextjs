@@ -2,33 +2,89 @@ import React from 'react';
 import Url from 'url-parse';
 import Link from 'next/link';
 import TimeAgo from './TimeAgo';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
-export default (props) => {
-    const { by, descendants, score, time, title, url, id } = props.story;
-    const storyNum = props.index + 1;
-    const visiableUrl = url ? new Url(url).hostname.replace('www.', '') : '';
-    const storyLink = url ? `${new Url(url).protocol}//${new Url(url).hostname}` : '';
+export default ({ story, index }) => {
+    const { by,
+        descendants,
+        score,
+        time,
+        title,
+        url,
+        id } = story;
+    const storyNum = index + 1;
+    const { hostname, protocol } = new Url(url);
+    const visiableUrl = url ?
+        hostname.replace('www.', '') :
+        '';
+    const storyLink = url ?
+        `${protocol}//${hostname}` :
+        '';
 
     const pageQuery = useRouter().query.p;
-    const pageNum = pageQuery? Number(pageQuery) + 1 : 2;
-    const storyNumOffset = storyNum + 30 * ( pageNum -2 );
+    const path = useRouter().pathname;
+    const pageNum = pageQuery ?
+        Number(pageQuery) + 1 :
+        2;
+    const storyNumOffset = storyNum + 30 * (pageNum - 2);
     return (
         <>
             <div>
-                <p className='item-num'>{storyNumOffset}.</p>
+                <p className='item-num'>
+                    {`${storyNumOffset}.`}
+                </p>
             </div>
             <div>
                 <p className='item-title-and-url'>
-                    {url? <a className='item-title' href={url}>{title}</a> :
-                    <Link href={`item?id=${id}`}><a className='item-title'>{title}</a></Link>}
-                    <a className='item-url' href={storyLink}>{visiableUrl}</a>
+                    {url ?
+                        <a className='item-title' href={url}>
+                            {title}
+                        </a> :
+                        <Link href={`item?id=${id}`}>
+                            <a className='item-title'>
+                                {title}
+                            </a>
+                        </Link>
+                    }
+                    <a className='item-url' href={storyLink}>
+                        {visiableUrl}
+                    </a>
                 </p>
-                <div className='item-stat'>
-                    <p className='item-point'>
-                        {score} points by <Link href={`/user?id=${by}`}><a >{by}</a></Link> <Link href={`/item?id=${id}`}><a><TimeAgo time={time} /></a></Link> | <Link href={`/item?id=${id}`}><a>{descendants} comments</a></Link>
-                    </p>
-                </div>
+                {
+                    path !== '/jobs' ?
+                        <p className='item-point'>
+                            <span>
+                                {`${score} points by `}
+                            </span>
+                            <Link href={`/user?id=${by}`}>
+                                <a >
+                                    {`${by} `}
+                                </a>
+                            </Link>
+                            <Link href={`/item?id=${id}`}>
+                                <a>
+                                    <TimeAgo time={time} />
+                                </a>
+                            </Link>
+                            <span>
+                                {' '}|{' '}
+                            </span>
+                            <Link href={`/item?id=${id}`}>
+                                <a>
+                                    {`${descendants} comments`}
+                                </a>
+                            </Link>
+                        </p>
+                        :
+                        <p className='item-point'>
+                            <Link href={`/item?id=${id}`}>
+                                <a>
+                                    <TimeAgo time={time} />
+                                </a>
+                            </Link>
+                        </p>
+                }
+
             </div>
             <style jsx>{`
             .item-num {
@@ -57,18 +113,17 @@ export default (props) => {
             }
             .item-point {
             color: #828284;
-            margin: 0;
             font-size: 1.2rem;
             }
-            .item-stat a {
+            .item-point {
+                margin: 0 0 0.4rem 0;
+            }
+            .item-point a {
                 color: #828284;
                 text-decoration: none;
             }
-            .item-stat a:hover {
+            .item-point a:hover {
                 text-decoration: underline;
-            }
-            .item-stat {
-                margin: 0 0 0.4rem 0;
             }
             @media(min-width: 750px){
                 .item-title {

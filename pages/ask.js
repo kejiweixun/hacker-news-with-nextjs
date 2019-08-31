@@ -1,9 +1,12 @@
 import React from 'react';
-import Page from '../components/Page';
-import fetchStory from '../lib/fetchStory.js'
+import StoryList from '../components/StoryList';
+import getStoryList from '../lib/getStoryList.js'
 
-const Ask = ({stories}) => <Page stories={stories} title='Ask | Hacker News'/>
+const Ask = ({ stories }) => <StoryList
+  stories={stories} 
+  title='Ask | KeKe News'
+/>
 
-Ask.getInitialProps = fetchStory;
+Ask.getInitialProps = getStoryList;
 
 export default Ask;
