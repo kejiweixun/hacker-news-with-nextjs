@@ -1,7 +1,8 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
-import getUserInfo from '../lib/getUserInfo.js';
+// import getUserInfo from '../lib/getUserInfo.js';
+import fetchUserInfo from '../lib/fetchUserInfo.js';
 
 function User({ userInfo }) {
     const { id, created, karma, about } = userInfo;
@@ -73,7 +74,7 @@ function User({ userInfo }) {
     )
 }
 
-User.getInitialProps = getUserInfo;
+User.getInitialProps = fetchUserInfo;
 
 export default User;
 

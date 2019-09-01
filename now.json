@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "hacker-news",
+  "builds": [
+      { "src": "package.json",
+        "use": "@now/next@canary",
+        "config": { "maxLambdaSize": "10mb" }
+      }
+  ]
+}
