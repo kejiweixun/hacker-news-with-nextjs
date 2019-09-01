@@ -1,6 +1,6 @@
 import React from 'react';
 import StoryList from '../components/StoryList';
-// import getStoryList from '../lib/getStoryList.js';
+import getStoryList from '../lib/getStoryList.js';
 import fetchStoryList from '../lib/fetchStoryList.js'
 
 const Ask = ({ stories }) => <StoryList
@@ -8,6 +8,6 @@ const Ask = ({ stories }) => <StoryList
   title='Ask | KeKe News'
 />
 
-Ask.getInitialProps = fetchStoryList;
+Ask.getInitialProps = getStoryList;
 
 export default Ask;

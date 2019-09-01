@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import TimeAgo from '../components/TimeAgo';
 import Layout from '../components/Layout';
-import CommentsList from '../components/ComentList';
+import CommentsList from './CommentList';
 
 function CommentItem({ item }) {
   const [textareaPlaceholder, setTextareaPlaceholder] = useState('');

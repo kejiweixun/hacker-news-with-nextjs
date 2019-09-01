@@ -1,8 +1,8 @@
 import React from 'react'
 import { useRouter } from 'next/router';
 import StoryList from '../components/StoryList';
-// import getStoryList from '../lib/getStoryList.js';
-import fetchStoryList from '../lib/fetchStoryList.js'
+import getStoryList from '../lib/getStoryList.js';
+// import fetchStoryList from '../lib/fetchStoryList.js'
 
 const Submitted = ({ stories }) => {
   const user = useRouter().query.id;
@@ -17,6 +17,6 @@ const Submitted = ({ stories }) => {
   />
 }
 
-Submitted.getInitialProps = fetchStoryList;
+Submitted.getInitialProps = getStoryList;
 
 export default Submitted;

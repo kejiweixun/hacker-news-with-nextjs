@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import TimeAgo from '../components/TimeAgo';
 import Layout from '../components/Layout';
-import CommentsList from '../components/ComentList';
+import CommentList from './CommentList';
 
 function StoryItem({ item }) {
   const [textareaPlaceholder, setTextareaPlaceholder] = useState('');
@@ -88,7 +88,7 @@ function StoryItem({ item }) {
         <div className='all-comment'>
           {
             commentNotDeleted.map(comment =>
-              <CommentsList
+              <CommentList
                 comment={comment}
                 key={comment.id}
               />)
