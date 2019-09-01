@@ -47,6 +47,9 @@ export default (props) => {
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        .comment-text pre, .comment-title-text pre {
+          overflow-x: scroll;
+        }
         .comment-text a {
           font-size: 1.3rem;
           color: #222;
@@ -60,13 +63,15 @@ export default (props) => {
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        .comment-title-text {
+          font-size: 1.4rem;
+        }
         .comment-title-text p {
           margin: 0;
           margin-bottom: 0.8rem;
           line-height: 1.3;
           overflow: hidden;
           text-overflow: ellipsis;
-          font-size: 1.4rem;
         }
         .comment-title-text a {
           font-size: 1.3rem;
