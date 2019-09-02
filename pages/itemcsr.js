@@ -26,41 +26,42 @@ function Item() {
             async function hello() {
                 function getTitleAndId(id) {
                     return db.child(`item/${id}`)
-                        .once('value')
-                        .then(snap => {
-                            const value = snap.val();
-                            if (value.type == 'comment') {
-                                return getTitleAndId(value.parent)
-                            } else {
-                                const belongToStory = value.title;
-                                const belongToStoryId = value.id;
-                                return { belongToStory, belongToStoryId }
-                            }
-                        })
+                    .once('value')
+                    .then(snap => {
+                        const item = snap.val();
+                        if (item.parent) {
+                            return getTitleAndId(item.parent);
+                        } else {
+                            const belongToStory = item.title;
+                            const storyId = item.id;
+                            return { belongToStory, storyId }
+                        }
+                    })
                 }
 
-                const { belongToStory, belongToStoryId } = await getTitleAndId(itemId);
+                const { belongToStory, storyId } = await getTitleAndId(itemId);
                 function getItem(id) {
                     return db.child(`item/${id}`)
                         .once('value')
                         .then(snap => {
-                            const value = snap.val();
-                            // if (!value) {
-                            //     value = { deleted: true, id: id };
-                            // }
-                            if (value.kids) {
-                                return Promise.all(value.kids.map(getItem))
+                            let item = snap.val();
+                            if (!item) {
+                                // sometimes item will return null
+                                item = { deleted: true }
+                            };
+                            if (item.type === 'comment') {
+                                item.belongToStory = belongToStory;
+                                item.storyId = storyId;
+                            }
+                            if (item.kids) {
+                                return Promise.all(item.kids.map(getItem))
                                     .then(res => {
-                                        value.comment = res;
-                                        value.belongToStory = belongToStory;
-                                        value.belongToStoryId = belongToStoryId;
-                                        return value;
+                                        item.comment = res;
+                                        return item;
                                     })
                             } else {
-                                value.comment = [];
-                                value.belongToStory = belongToStory;
-                                value.belongToStoryId = belongToStoryId;
-                                return value;
+                                item.comment = [];
+                                return item;
                             }
                         })
                 }
