@@ -22,6 +22,9 @@ export default (props) => {
     const jobsStyle = {
         color: `${path === '/jobs' ? 'white' : ''}`
     }
+    const askCsrStyle = {
+        color: `${path === '/askcsr' ? 'white' : ''}`
+    }
 
     return (
         <>
@@ -65,6 +68,13 @@ export default (props) => {
                                 <Link href='/jobs'>
                                     <a style={jobsStyle}>
                                         jobs
+                                    </a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/askcsr'>
+                                    <a style={askCsrStyle}>
+                                        ask(CSR)
                                     </a>
                                 </Link>
                             </li>

@@ -2,10 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import TimeAgo from './TimeAgo';
+import {useRouter} from 'next/router';
 
 function CommentsList({ comment }) {
   const [collapse, setCollapse] = useState('');
-
+  const path = useRouter().pathname;
   let count = 1;
   const repliesCount = function (comment) {
     if (comment.kids) {
@@ -34,7 +35,7 @@ function CommentsList({ comment }) {
                   {`${comment.by} `}
                 </a>
               </Link>
-              <Link href={`/item?id=${comment.id}`}>
+              <Link href={path !=='/itemcsr'?`item?id=${comment.id}`:`itemcsr?id=${comment.id}`}>
                 <a>
                   <TimeAgo time={comment.time} />
                 </a>

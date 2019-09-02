@@ -4,7 +4,7 @@ import Link from 'next/link';
 import TimeAgo from './TimeAgo';
 import { useRouter } from 'next/router';
 
-export default ({ story, index }) => {
+export default ({ story, index, pageNum }) => {
     const { by,
         descendants,
         score,
@@ -13,6 +13,7 @@ export default ({ story, index }) => {
         url,
         id } = story;
     const storyNum = index + 1;
+    console.log(1, 'story.js')
     const { hostname, protocol } = new Url(url);
     const visiableUrl = url ?
         hostname.replace('www.', '') :
@@ -21,11 +22,7 @@ export default ({ story, index }) => {
         `${protocol}//${hostname}` :
         '';
 
-    const pageQuery = useRouter().query.p;
     const path = useRouter().pathname;
-    const pageNum = pageQuery ?
-        Number(pageQuery) + 1 :
-        2;
     const storyNumOffset = storyNum + 30 * (pageNum - 2);
     // some item has no descendats property
     // e.g. id = 20846442;
@@ -43,7 +40,7 @@ export default ({ story, index }) => {
                         <a className='item-title' href={url}>
                             {title}
                         </a> :
-                        <Link href={`item?id=${id}`}>
+                        <Link href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
                             <a className='item-title'>
                                 {title}
                             </a>
@@ -64,7 +61,7 @@ export default ({ story, index }) => {
                                     {`${by} `}
                                 </a>
                             </Link>
-                            <Link href={`/item?id=${id}`}>
+                            <Link href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
                                 <a>
                                     <TimeAgo time={time} />
                                 </a>
@@ -72,7 +69,7 @@ export default ({ story, index }) => {
                             <span>
                                 {' '}|{' '}
                             </span>
-                            <Link href={`/item?id=${id}`}>
+                            <Link href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
                                 <a>
                                     {`${commentCount} comments`}
                                 </a>
@@ -80,7 +77,7 @@ export default ({ story, index }) => {
                         </p>
                         :
                         <p className='item-point'>
-                            <Link href={`/item?id=${id}`}>
+                            <Link href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
                                 <a>
                                     <TimeAgo time={time} />
                                 </a>

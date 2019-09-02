@@ -39,7 +39,7 @@ function CommentItem({ item }) {
             <Link href={`item?id=${parent}`}>
               <a>
                 parent
-              </a>
+                 </a>
             </Link>
             <span>
               {' '}|{' '}
@@ -53,7 +53,7 @@ function CommentItem({ item }) {
         </div>
         <div dangerouslySetInnerHTML={{ __html: `<p>${text}` }}
           className='comment-title-text'
-          style={{margin: '1rem'}}
+          style={{ margin: '1rem' }}
         />
         <div className='comment-form'>
           <form>
@@ -62,10 +62,9 @@ function CommentItem({ item }) {
             <button type='button' onClick={() =>
               setTextareaPlaceholder("can't post")}>
               add comment
-            </button>
+                </button>
           </form>
         </div>
-
         <div className='all-replies'>
           {
             commentNotDeleted.map(comment =>

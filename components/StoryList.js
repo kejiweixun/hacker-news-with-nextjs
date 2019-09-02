@@ -21,20 +21,22 @@ function StoryList({ stories, title, user }) {
               story={story}
               index={index}
               key={story.id}
+              pageNum={pageNum}
             />)
           }
-          {
-            stories.length ?
+        
+        </div>
+        {
+            stories.length < 30 ?
+            null :
               <div className='more'>
                 <Link href={`${path}?p=${pageNum}`}>
                   <a>
                     More
                   </a>
                 </Link>
-              </div> :
-              ''
+              </div> 
           }
-        </div>
       </Layout>
       <style jsx>{`
         .items-container {
@@ -42,11 +44,11 @@ function StoryList({ stories, title, user }) {
           display: grid;
           grid-template-columns: minmax(2rem, 4rem) minmax(auto, auto);
         }
+        .more {
+          margin: 0 0 2rem 4rem;
+        }
         .more a {
-          display: block;
           font-size: 1.5rem;
-          margin-left: 3rem;
-          margin-top: 1rem;
           color: black;
           text-decoration: none;
         }
