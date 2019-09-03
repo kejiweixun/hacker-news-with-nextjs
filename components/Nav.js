@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default (props) => {
@@ -29,54 +28,41 @@ export default (props) => {
     return (
         <>
             <div className='nav-container-logo-text'>
-                <Link href='/'>
-                    <a className='nav-logo'>
-                        <img src='/static/logo.gif' />
-                    </a>
-                </Link>
-
+                <a className='nav-logo' href='/'>
+                    <img src='/static/logo.gif' />
+                </a>
                 <div className='nav-container-text'>
                     <header>
-                        <Link href='/'>
-                            <a>Hacker News</a>
-                        </Link>
+                        <a href='/'>
+                            Hacker News
+                        </a>
                     </header>
                     <nav>
                         <ul>
                             <li>
-                                <Link href='/newest'>
-                                    <a style={newStyle}>
-                                        new
-                                    </a>
-                                </Link>
+                                <a href='/newest' style={newStyle}>
+                                    new
+                                </a>
                             </li>
                             <li>
-                                <Link href='/ask'>
-                                    <a style={askStyle}>
-                                        ask
-                                    </a>
-                                </Link>
+                                <a href='/ask' style={askStyle}>
+                                    ask
+                                </a>
                             </li>
                             <li>
-                                <Link href='/show'>
-                                    <a style={showStyle}>
-                                        show
-                                    </a>
-                                </Link>
+                                <a href='/show' style={showStyle}>
+                                    show
+                                </a>
                             </li>
                             <li>
-                                <Link href='/jobs'>
-                                    <a style={jobsStyle}>
-                                        jobs
-                                    </a>
-                                </Link>
+                                <a href='/jobs' style={jobsStyle}>
+                                    jobs
+                                </a>
                             </li>
                             <li>
-                                <Link href='/askcsr'>
-                                    <a style={askCsrStyle}>
-                                        ask(CSR)
-                                    </a>
-                                </Link>
+                                <a href='/askcsr' style={askCsrStyle}>
+                                    ask(CSR)
+                                </a>
                             </li>
                             {
                                 props.user ?

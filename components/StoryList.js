@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from './Layout';
 import Story from './Story';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 function StoryList({ stories, title, user }) {
@@ -30,11 +29,9 @@ function StoryList({ stories, title, user }) {
             stories.length < 30 ?
             null :
               <div className='more'>
-                <Link href={`${path}?p=${pageNum}`}>
-                  <a>
+                  <a href={`${path}?p=${pageNum}`}>
                     More
                   </a>
-                </Link>
               </div> 
           }
       </Layout>

@@ -1,6 +1,5 @@
 import React from 'react';
 import Url from 'url-parse';
-import Link from 'next/link';
 import TimeAgo from './TimeAgo';
 import { useRouter } from 'next/router';
 
@@ -39,11 +38,9 @@ export default ({ story, index, pageNum }) => {
                         <a className='item-title' href={url}>
                             {title}
                         </a> :
-                        <Link href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
-                            <a className='item-title'>
+                            <a className='item-title' href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
                                 {title}
                             </a>
-                        </Link>
                     }
                     <a className='item-url' href={storyLink}>
                         {visiableUrl}
@@ -55,32 +52,24 @@ export default ({ story, index, pageNum }) => {
                             <span>
                                 {`${score} points by `}
                             </span>
-                            <Link href={`/user?id=${by}`}>
-                                <a >
+                                <a href={`/user?id=${by}`}>
                                     {`${by} `}
                                 </a>
-                            </Link>
-                            <Link href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
-                                <a>
+                                <a href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
                                     <TimeAgo time={time} />
                                 </a>
-                            </Link>
                             <span>
                                 {' '}|{' '}
                             </span>
-                            <Link href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
-                                <a>
+                                <a href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
                                     {`${commentCount} comments`}
                                 </a>
-                            </Link>
                         </p>
                         :
                         <p className='item-point'>
-                            <Link href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
-                                <a>
+                                <a href={path!=='/askcsr'?`item?id=${id}`:`itemcsr?id=${id}`}>
                                     <TimeAgo time={time} />
                                 </a>
-                            </Link>
                         </p>
                 }
 

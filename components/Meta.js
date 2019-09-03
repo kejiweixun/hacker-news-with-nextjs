@@ -19,10 +19,6 @@ export default (props) => {
           href='/static/favicon.ico'
           type='image/x-ico'
         />
-        <link
-          rel='stylesheet'
-          href='/static/nprogress.css'
-        />
       </Head>
 
       <style jsx global>{`

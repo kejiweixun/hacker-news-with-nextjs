@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import URL from 'url-parse';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import TimeAgo from '../components/TimeAgo';
 import Layout from '../components/Layout';
@@ -19,7 +18,7 @@ function StoryItem({ item }) {
   const commentNotDeleted = comment.filter(item => !item.deleted);
   const { hostname, protocol } = new URL(url);
   const visiableUrl = url ?
-    `(${hostname.replace('www.', '')})`:
+    `(${hostname.replace('www.', '')})` :
     '';
   const storyHomepage = url ?
     `${protocol}//${hostname}` :
@@ -46,15 +45,13 @@ function StoryItem({ item }) {
         <div className='item-stat'>
           <p className='item-point'>
             <span>{score} points by{' '}</span>
-            <Link href={`/user?id=${by}`}>
-              <a>{by}</a>
-            </Link>
-            <Link href={`/item?id=${id}`}>
-              <a>
+              <a href={`/user?id=${by}`}>
+                {by}
+              </a>
+              <a href={`/item?id=${id}`}>
                 {' '}
                 <TimeAgo time={time} />
               </a>
-            </Link>
             <span>{' '}|{' '}</span>
             <a href={pastSearch}>
               past
@@ -64,16 +61,14 @@ function StoryItem({ item }) {
               web
             </a>
             <span>{' '}|{' '}</span>
-            <Link href={`/item?id=${id}`}>
-              <a>
+              <a href={`/item?id=${id}`}>
                 {descendants} comments
               </a>
-            </Link>
           </p>
         </div>
         <div className='comment-title-text'
           dangerouslySetInnerHTML={{ __html: `<p>${text}` }}
-          style={{margin: '1rem'}}
+          style={{ margin: '1rem' }}
         />
         <div className='comment-form'>
           <form>

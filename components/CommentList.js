@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import Link from 'next/link';
 import TimeAgo from './TimeAgo';
 import {useRouter} from 'next/router';
 
@@ -30,16 +29,12 @@ function CommentsList({ comment }) {
           <div className='comment-user'>
             <div className='comment-arrow' />
             <div>
-              <Link href={`/user?id=${comment.by}`}>
-                <a>
+                <a href={`/user?id=${comment.by}`}>
                   {`${comment.by} `}
                 </a>
-              </Link>
-              <Link href={path !=='/itemcsr'?`item?id=${comment.id}`:`itemcsr?id=${comment.id}`}>
-                <a>
+                <a href={path !=='/itemcsr'?`item?id=${comment.id}`:`itemcsr?id=${comment.id}`}>
                   <TimeAgo time={comment.time} />
                 </a>
-              </Link>
               <a onClick={handleReplyCollapse}
                 href='#'
                 className='collapse-sign'>

@@ -1,6 +1,5 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import Link from 'next/link';
 import Story from './Story';
 
 function StoryCsr({stories, pageNum}){
@@ -20,11 +19,9 @@ function StoryCsr({stories, pageNum}){
         {stories.length < 30 ?
           null :
           <div className='more'>
-            <Link href={`askcsr?p=${pageNum}`}>
-              <a>
+              <a href={`askcsr?p=${pageNum}`}>
                 More
               </a>
-            </Link>
           </div>
         }
 

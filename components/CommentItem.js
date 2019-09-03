@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import TimeAgo from '../components/TimeAgo';
 import Layout from '../components/Layout';
 import CommentsList from './CommentList';
@@ -23,32 +22,24 @@ function CommentItem({ item }) {
       <div>
         <div className='item-stat'>
           <p className='item-point'>
-            <Link href={`/user?id=${by}`}>
-              <a>
+              <a href={`/user?id=${by}`}>
                 {`${by} `}
               </a>
-            </Link>
-            <Link href={`/item?id=${parent}`}>
-              <a>
+              <a href={`/item?id=${parent}`}>
                 <TimeAgo time={time} />
               </a>
-            </Link>
             <span>
               {' '}|{' '}
             </span>
-            <Link href={`item?id=${parent}`}>
-              <a>
+              <a href={`item?id=${parent}`}>
                 parent
                  </a>
-            </Link>
             <span>
               {' '}|{' '}
             </span>
-            <Link href={`item?id=${storyId}`}>
-              <a>
+              <a href={`item?id=${storyId}`}>
                 {`on: ${belongToStory.slice(0, 40)}...`}
               </a>
-            </Link>
           </p>
         </div>
         <div dangerouslySetInnerHTML={{ __html: `<p>${text}` }}
