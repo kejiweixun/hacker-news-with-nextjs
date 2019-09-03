@@ -75,7 +75,8 @@ function StoryItem({ item }) {
             <textarea
               placeholder={textareaPlaceholder}
             />
-            <button onClick={() => setTextareaPlaceholder("HN post api?")}>
+            <button type='button' onClick={() => 
+              setTextareaPlaceholder("HN post api?")}>
               add comment
             </button>
           </form>
