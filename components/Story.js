@@ -13,7 +13,6 @@ export default ({ story, index, pageNum }) => {
         url,
         id } = story;
     const storyNum = index + 1;
-    console.log(1, 'story.js')
     const { hostname, protocol } = new Url(url);
     const visiableUrl = url ?
         hostname.replace('www.', '') :
