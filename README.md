@@ -3,7 +3,7 @@
 学了 Nextjs, 这是一个基于 react 的 server side rendering 框架, 先简单看了一遍官方文档, 因为经常看 hacker news, 所以决定用它的 api 模仿着写一个 HN 网站. 我写的前两个项目都是 react 静态网站, 没有数据请求, 但 Nextjs 是 ssr 框架, 在服务端完成数据请求并渲染成 html 文件之后再返回给客户端, 所以写一个有数据请求的网站更能体现 nextjs 的特性.
 
 live demo (要科学上网, HN 以及 HN 的 api 默认无法在国内访问, 所以没有部署到国内的云服务商):
-- 部署在[谷歌 App Engine](https://hacker-news-with-nextjs.appspot.com/)
+- 部署在[谷歌 App Engine](https://hacker-news-with-nextjs.appspot.com/)
 
 
 # 收获
@@ -101,9 +101,9 @@ const pathAndId = useRouter().asPath;
 
 create-react-app 和 react-router-dom 都支持设置 baseurl, 即可通过 kejiweixun.com/hacker-news 这种域名访问网站, 但 nextjs 不支持.
 
-## 关于 nextjs 的 jsx
+## 关于 nextjs 的 styled-jsx
 
-jsx 默认只作用于它所在的 component, 可以通过 global 属性使这些 css rules 突破这个 component 的界限, 从而影响到其他引入了这个 component 的 component. 
+nextjs 自带 styled-jsx, styled-jsx 默认只作用于它所在的 component, 可以通过 global 属性使这些 css rules 突破这个 component 的界限, 从而影响到其他引入了这个 component 的 component. 
 
 要使一些 css rules 作用于整个网页页面(通常一个页面由多个 component 组成), 例如规定 base font size, 设置 background 等, 其中一种方法是在 next/header 的 `<Header>` 模块中加入 style 元素, 然后把包含这个 Header 模块的 component 引入到页面模块中.
 
