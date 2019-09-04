@@ -29,7 +29,7 @@ export default (props) => {
         <>
             <div className='nav-container-logo-text'>
                 <a className='nav-logo' href='/'>
-                    <img src='/static/logo.gif' />
+                    <img src='/static/logo.gif' alt='logo'/>
                 </a>
                 <div className='nav-container-text'>
                     <header>

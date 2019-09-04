@@ -6,6 +6,7 @@ import CommentsList from './CommentList';
 function CommentItem({ item }) {
   const [textareaPlaceholder, setTextareaPlaceholder] = useState('');
   const { by,
+    id,
     time,
     text,
     parent,
@@ -25,7 +26,7 @@ function CommentItem({ item }) {
               <a href={`/user?id=${by}`}>
                 {`${by} `}
               </a>
-              <a href={`/item?id=${parent}`}>
+              <a href={`/item?id=${id}`}>
                 <TimeAgo time={time} />
               </a>
             <span>

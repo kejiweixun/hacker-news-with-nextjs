@@ -12,7 +12,10 @@ export default (props) => {
           name="viewport"
           content="width=device-width, initial-scale=1"
         />
-        <meta charSet="utf-8" 
+        <meta name='Discription'
+          content='hacker news in nextjs, by kejiweixun'
+        />
+        <meta charSet="utf-8"
         />
         <link
           rel='shortcut icon'
