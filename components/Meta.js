@@ -23,9 +23,13 @@ export default (props) => {
           type='image/x-ico'
         />
       </Head>
-
       <style jsx global>{`
+      @font-face {
+        font-family: 'Open Sans';
+        src: url('/static/OpenSans-Regular.ttf');
+      }
         html {
+          font-family: 'PingFang SC', 'Open Sans', sans-serif;
           font-size: 10px;
           margin: 0;
           background: white;
