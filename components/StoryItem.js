@@ -24,6 +24,8 @@ function StoryItem({ item }) {
     `${protocol}//${hostname}` :
     '';
   const id = useRouter().query.id;
+  const path = useRouter().pathname;
+  const pageNum = useRouter().query.p ? Number(useRouter().query.p) + 1 : 2;
   const pastSearch = encodeURI(`https://hn.algolia.com/?query=${title}&sort=byDate&dateRange=all&type=story&storyText=false&prefix&page=0`);
   const webSearch = encodeURI(`https://www.google.com/search?q=${title}`);
 
@@ -36,7 +38,7 @@ function StoryItem({ item }) {
             <a className='item-title' href={url}>
               {title}
             </a>
-            <span>{' '}|{' '}</span>
+            <span>{' '}</span>
             <a className='item-url' href={storyHomepage}>
               {visiableUrl}
             </a>
@@ -45,13 +47,13 @@ function StoryItem({ item }) {
         <div className='item-stat'>
           <p className='item-point'>
             <span>{score} points by{' '}</span>
-              <a href={`/user?id=${by}`}>
-                {by}
-              </a>
-              <a href={`/item?id=${id}`}>
-                {' '}
-                <TimeAgo time={time} />
-              </a>
+            <a href={`/user?id=${by}`}>
+              {by}
+            </a>
+            <a href={`/item?id=${id}`}>
+              {' '}
+              <TimeAgo time={time} />
+            </a>
             <span>{' '}|{' '}</span>
             <a href={pastSearch}>
               past
@@ -61,8 +63,8 @@ function StoryItem({ item }) {
               web
             </a>
             <span>{' '}|{' '}</span>
-              <a href={`/item?id=${id}`}>
-                {descendants} comments
+            <a href={`/item?id=${id}`}>
+              {descendants} comments
               </a>
           </p>
         </div>
@@ -75,7 +77,7 @@ function StoryItem({ item }) {
             <textarea
               placeholder={textareaPlaceholder}
             />
-            <button type='button' onClick={() => 
+            <button type='button' onClick={() =>
               setTextareaPlaceholder("HN post api?")}>
               add comment
             </button>
@@ -88,6 +90,26 @@ function StoryItem({ item }) {
                 comment={comment}
                 key={comment.id}
               />)
+          }
+          {descendants < 100 ? null :
+            <div className='comment-pages'>
+              {
+                <div className='comment-page'>
+                  <a href={`/item?id=${id}`}>
+                    第一页
+                  </a>
+                </div>
+              }
+              {
+                comment.length < 5 ?
+                  null :
+                  <div className='comment-page'>
+                    <a href={`${path}?id=${id}&p=${pageNum}`}>
+                      下一页
+                    </a>
+                  </div>
+              }
+            </div>
           }
         </div>
       </div>
@@ -155,8 +177,22 @@ function StoryItem({ item }) {
               margin-bottom: 6rem;
           }
           .all-comment {
-              margin: 0;
-              padding-bottom: 5rem;
+              margin: 0 0 4rem 0;
+          }
+          .comment-pages {
+            display: flex;
+            justify-content: center;
+            margin: 0 0 2rem 0;
+          }
+          .comment-page a {
+            font-size: 1.3rem;
+            color: black;
+          }
+          .comment-page a:hover {
+            text-decoration: none;
+          }
+          .comment-page a:active {
+            text-decoration: none;
           }
           @media(min-width: 750px){
               .item-title {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TimeAgo from '../components/TimeAgo';
 import Layout from '../components/Layout';
 import CommentsList from './CommentList';
+import { useRouter } from 'next/router';
 
 function CommentItem({ item }) {
   const [textareaPlaceholder, setTextareaPlaceholder] = useState('');
@@ -16,31 +17,32 @@ function CommentItem({ item }) {
   const commentNotDeleted = comment.filter(
     item => !item.deleted
   );
-
+  const path = useRouter().asPath.replace(/&.+/, '');
+  const pageNum = useRouter().query.p ? useRouter().query.p + 1 : 2;
   return (
     <Layout title={`${text.slice(0, 20)}... | Hacker News`}>
 
       <div>
         <div className='item-stat'>
           <p className='item-point'>
-              <a href={`/user?id=${by}`}>
-                {`${by} `}
-              </a>
-              <a href={`/item?id=${id}`}>
-                <TimeAgo time={time} />
-              </a>
+            <a href={`/user?id=${by}`}>
+              {`${by} `}
+            </a>
+            <a href={`/item?id=${id}`}>
+              <TimeAgo time={time} />
+            </a>
             <span>
               {' '}|{' '}
             </span>
-              <a href={`item?id=${parent}`}>
-                parent
+            <a href={`item?id=${parent}`}>
+              parent
                  </a>
             <span>
               {' '}|{' '}
             </span>
-              <a href={`item?id=${storyId}`}>
-                {`on: ${belongToStory.slice(0, 40)}...`}
-              </a>
+            <a href={`item?id=${storyId}`}>
+              {`on: ${belongToStory.slice(0, 40)}...`}
+            </a>
           </p>
         </div>
         <div dangerouslySetInnerHTML={{ __html: `<p>${text}` }}
@@ -108,8 +110,7 @@ function CommentItem({ item }) {
                   margin-bottom: 6rem;
               }
               .all-replies {
-                  margin: 0;
-                  padding-bottom: 5rem;
+                  margin: 0 0 4rem 0;
               }
               @media(min-width: 750px){
                   .item-point {
