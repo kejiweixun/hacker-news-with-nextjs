@@ -2,7 +2,8 @@
 
 学了 Nextjs, 这是一个基于 react 的 server side rendering 框架, 先简单看了一遍官方文档, 因为经常看 hacker news, 所以决定用它的 api 模仿着写一个 HN 网站. 我写的前两个项目都是 react 静态网站, 没有数据请求, 但 Nextjs 是 ssr 框架, 在服务端完成数据请求并渲染成 html 文件之后再返回给客户端, 所以写一个有数据请求的网站更能体现 nextjs 的特性.
 
-live demo (要科学上网, HN 以及 HN 的 api 默认无法在国内访问, 所以没有部署到国内的云服务商):
+live demo:
+- 部署在 [now](https://hacker-news.kejiweixun.now.sh/)
 - 部署在[谷歌 App Engine](https://hacker-news-with-nextjs.appspot.com/)
 
 
@@ -19,7 +20,9 @@ live demo (要科学上网, HN 以及 HN 的 api 默认无法在国内访问, �
 
 ## 第一次在 Github issue 反映 bug
 
-nextjs 的主要维护者是一个云服务提供商, 有一个叫 now 的云服务平台, 在国内可以正常访问, 也可以在服务器端顺利请求 HN 的 api, 但 now 和 firebase 有冲突, 我在 nextjs 的 issue 留言[反映了这个问题](https://github.com/zeit/now/issues/1830#issuecomment-526880788), 作者表示找到了问题的来源, 但[暂时还没有解决](https://github.com/zeit/node-file-trace/issues/58). 而 HN 的 api 是托管在 firebase 的, 所以我[部署到 now 的版本](http://hacker-news.kejiweixun.now.sh/)没有用 firebase 的 sdk 发起数据请求, 用的是 nextjs 官方文档推荐的通用的 isomorphic-unfetch, 但 isomorphic-unfetch 请求 firebase 的数据经常失败, HN 也建议结合 firebase SDK 使用它的 api.
+nextjs 的主要维护者是一个云服务提供商, 有一个叫 now 的云服务平台, 在国内可以正常访问, 也可以在服务器端顺利请求 HN 的 api, 但 now 和 firebase 有冲突, 我在 nextjs 的 issue 留言[反映了这个问题](https://github.com/zeit/now/issues/1830#issuecomment-526880788), 作者表示找到了问题的来源, ~~但[暂时还没有解决](https://github.com/zeit/node-file-trace/issues/58). 而 HN 的 api 是托管在 firebase 的, 所以我[部署到 now 的版本](http://hacker-news.kejiweixun.now.sh/)没有用 firebase 的 sdk 发起数据请求, 用的是 nextjs 官方文档推荐的通用的 isomorphic-unfetch, 但 isomorphic-unfetch 请求 firebase 的数据经常失败, HN 也建议结合 firebase SDK 使用它的 api.~~
+
+更新: 问题已解决, 其实是 [firebase 的问题](https://github.com/zeit/now/issues/1830#issuecomment-528099193), 把 firebase 更新到最新版本即可, 已经[部署到 now](https://hacker-news.kejiweixun.now.sh/), 体验比 GAE 好.
 
 firebase 官方文档有[使用方法](https://firebase.google.com/docs/database/web/read-and-write), 具体到这个网站, 请求 firebase 的 api 需要先 `npm i firebase`, 然后在相关的 component 中:
 ```
