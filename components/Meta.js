@@ -42,22 +42,28 @@ export default (props) => {
         // for unknow reason, 
         // use global jsx maybe the best way 
         // to style dangerouslySetInnerHtml
-        .comment-text p {
-          margin: 0;
+        .comment-text {
+          font-size: 1.3rem;
           margin-left: 1.2rem;
-          margin-bottom: 0.8rem;
+        }
+        .comment-text p, .comment-title-text p {
+          margin: 0 0 0.8rem 0;
           line-height: 1.3;
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        .comment-text p:empty, .comment-title-text p:empty {
+          display: none;
+        }
         .comment-text pre, .comment-title-text pre {
           overflow-x: scroll;
+          width: 90%;
         }
-        .comment-text a {
+        .comment-text a, .comment-title-text a {
           font-size: 1.3rem;
           color: #222;
         }
-        .comment-text a:visited {
+        .comment-text a:visited, .comment-title-text a:visited {
           color: #888;
         }
         //another dangerouslySetInnerHtml
@@ -69,29 +75,10 @@ export default (props) => {
         .comment-title-text {
           font-size: 1.4rem;
         }
-        .comment-title-text p {
-          margin: 0;
-          margin-bottom: 0.8rem;
-          line-height: 1.3;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .comment-title-text a {
-          font-size: 1.3rem;
-          color: #222;
-        }
-        .comment-title-text a:visited {
-          color: #888;
-        }
         @media(min-width: 750px){
           body {
             width: 84%;
             margin: 1rem auto;
-          }
-        }
-        @media(min-width: 750px){
-          .comment-text p {
-            font-size: 1.3rem;
           }
         }
       `}</style>
